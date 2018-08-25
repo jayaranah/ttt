@@ -82,14 +82,13 @@ def handle_message(event):
         search = text.replace(separate[0] + " ","")
         url = requests.get("http://api.w3hills.com/youtube/search?keyword={}&api_key=86A7FCF3-6CAF-DEB9-E214-B74BDB835B5B".format(search))
         data = url.json()
-        if len(cond) == 1:
-            no = 0
-            result = "╔══〘 Youtube Search 〙"
-            for anu in data["videos"]:
-                no += 1
-                result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
-            result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+        no = 0
+        result = "╔══〘 Youtube Search 〙"
+        for anu in data["videos"]:
+            no += 1
+            result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
+        result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     if "/news" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
