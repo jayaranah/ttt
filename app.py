@@ -61,27 +61,27 @@ def handle_message(event):
     sender = event.source.user_id #get user_id
     gid = event.source.sender_id #get group_id
 #=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
-    if text == "/test":
+    if text == "/bye":
         confirm_template_message = TemplateSendMessage(
-            alt_text='Confirm template',
+            alt_text='PASUN [ x ]',
 			template=ConfirmTemplate(
-                text='Are you sure?',
+                text='Delete bot?',
                 actions=[
                     PostbackAction(
-                        label='postback',
-                        text='postback text',
+                        label='sure',
+                        text='/goodbye',
                         data='action=buy&itemid=1'
                     ),
                     MessageAction(
-                        label='message',
-                        text='message text'
+                        label='no',
+                        text='...'
                     )
                 ]
             )
         )
         line_bot_api.reply_message(event.reply_token, confirm_template_message)
 	
-    if text == '/bye':
+    if text == '/goodbye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
