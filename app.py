@@ -62,9 +62,25 @@ def handle_message(event):
     gid = event.source.sender_id #get group_id
 #=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
     if text == "/test":
-        member_ids_res = line_bot_api.get_group_member_ids(event.source.group_id)
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=member_ids_res.member_ids))
+        confirm_template_message = TemplateSendMessage(
+            alt_text='Confirm template',
+			template=ConfirmTemplate(
+                text='Are you sure?',
+                actions=[
+                    PostbackAction(
+                        label='postback',
+                        text='postback text',
+                        data='action=buy&itemid=1'
+                    ),
+                    MessageAction(
+                        label='message',
+                        text='message text'
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, confirm_template_message)
+	
     if text == '/bye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
