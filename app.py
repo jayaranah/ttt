@@ -39,12 +39,18 @@ handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
-helpmessage = """
-/mid
-/bio
-/name
-/pic
-"""
+helpmessage = """╔〘 PASUNX 〙
+║
+╠═✪〘 ข้อความช่วยเหลือ  〙
+╠✪〘 คำสั่งปกติ 〙
+╠➣/mid
+╠➣/bio
+╠➣ /name
+╠➣ /pic
+╠✪〘 คำสั่งพิเศษ  〙
+╠➣ /shorturl [URL]
+║
+╚〘 PASUNX 〙"""
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -71,15 +77,15 @@ def handle_message(event):
         confirm_template_message = TemplateSendMessage(
             alt_text='God message',
 			template=ConfirmTemplate(
-                text='Delete bot?',
+                text='จะลบบอทออก? คุณแน่ใจหรือ?',
                 actions=[
                     PostbackAction(
-                        label='sure',
+                        label='แน่ใจ',
                         text='/goodbye',
                         data='action=buy&itemid=1'
                     ),
                     MessageAction(
-                        label='no',
+                        label='ไม่ลบ',
                         text='...'
                     )
                 ]
@@ -165,7 +171,7 @@ def handle_message(event):
                 text=result,
                 actions=[
                     PostbackAction(
-                        label='CHECK',
+                        label='ข้อมูล',
                         text='/check ' + result,
                         data='action=buy&itemid=1'
                     ),
@@ -174,7 +180,7 @@ def handle_message(event):
                         text=result
                     ),
                     URIAction(
-                        label='OPEN',
+                        label='เปืด',
                         uri=result
                     )
                 ]
