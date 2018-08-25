@@ -39,6 +39,12 @@ handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
+helpmessage = """
+/mid
+/bio
+/name
+/pic
+"""
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -57,6 +63,7 @@ def handle_join(event):
 	
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+	global helpmessage
     text = event.message.text #simplify for receove message
     sender = event.source.user_id #get user_id
     gid = event.source.sender_id #get group_id
@@ -80,12 +87,30 @@ def handle_message(event):
             )
         )
         line_bot_api.reply_message(event.reply_token, confirm_template_message)
-    if text == '/info':
+    if text == '/mid':
+        profile = line_bot_api.get_profile(event.source.user_id)
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.user_id))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
+    if text == '/bio':
+        profile = line_bot_api.get_profile(event.source.user_id)
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.user_id))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
+    if text == '/pic':
+        profile = line_bot_api.get_profile(event.source.user_id)
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.user_id))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
+    if text == '/name':
         profile = line_bot_api.get_profile(event.source.user_id)
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.user_id))
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.user_id))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
     if text == '/goodbye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
@@ -159,12 +184,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, buttons_template_message)
 		
     elif '/help' in text:
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text="no help message!"))
-        sticker_message = StickerSendMessage(
-            package_id='1',
-            sticker_id='1'
-        )
-        line_bot_api.reply_message(event.reply_token, sticker_message)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=helpmessage))
 		
     elif '/test' in text:
         buttons_template_message = TemplateSendMessage(
