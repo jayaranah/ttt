@@ -52,6 +52,7 @@ helpmessage = """╔〘 PASUNX 〙
 ╠✪〘 คำสั่งพิเศษ  〙
 ╠➣ /shorturl [URL]
 ╠➣ /news [text]
+╠➣ /yt [text]
 ║
 ╚〘 PASUNX 〙"""
 # Post Request
