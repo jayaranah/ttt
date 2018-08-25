@@ -129,7 +129,7 @@ def handle_message(event):
         originURL = text.replace(originURLx[0] + " ","")
         result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL + "&type=api").text
         buttons_template_message = TemplateSendMessage(
-            alt_text='Buttons template',
+            alt_text='God message',
             template=ButtonsTemplate(
                 thumbnail_image_url='https://gamingroom.co/wp-content/uploads/2017/11/CyCYOArUoAA2T6d.jpg',
                 title='RESULT',
@@ -155,6 +155,11 @@ def handle_message(event):
 		
     elif '/help' in text:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text="no help message!"))
+        sticker_message = StickerSendMessage(
+            package_id='1',
+            sticker_id='1'
+        )
+        line_bot_api.reply_message(event.reply_token, sticker_message)
 		
     elif '/test' in text:
         buttons_template_message = TemplateSendMessage(
