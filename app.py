@@ -83,7 +83,7 @@ def handle_message(event):
     if text == '/info':
         profile = line_bot_api.get_profile(event.source.user_id)
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.user_id))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.user_id))
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
     if text == '/goodbye':
