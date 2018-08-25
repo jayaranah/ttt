@@ -83,26 +83,14 @@ def handle_message(event):
     if text == '/info':
         if isinstance(event.source, SourceGroup):
             profile = line_bot_api.get_room_member_profile(event.source.sender_id, event.source.user_id)
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=profile.user_id))
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=profile.display_name))
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=profile.picture_url))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.user_id))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
         elif isinstance(event.source, SourceRoom):
             profile = line_bot_api.get_room_member_profile(event.source.room_id, event.source.user_id)
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=profile.user_id))
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=profile.display_name))
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=profile.picture_url))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.user_id))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
     if text == '/goodbye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
