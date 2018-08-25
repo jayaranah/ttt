@@ -39,6 +39,17 @@ handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
+rich_menu_to_create = RichMenu(
+    size=RichMenuSize(width=2500, height=843),
+    selected=False,
+    name="PASUNx [ GOD ]",
+    chat_bar_text="MENU",
+    areas=[RichMenuArea(
+        bounds=RichMenuBounds(x=0, y=0, width=2500, height=843),
+        action=URIAction(label='Contact', uri='https://line.me/ti/p/~esci_'))]
+)
+rich_menu_id = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
+
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
