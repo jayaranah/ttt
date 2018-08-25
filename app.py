@@ -89,7 +89,7 @@ def handle_message(event):
                 no += 1
                 result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
             result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
-            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text=result))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     if "/news" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
@@ -101,7 +101,7 @@ def handle_message(event):
         for st_div in st_divs:
             news_summaries.append(st_div.text)
         for i in news_summaries:
-            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text=i))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=i))
     if text == "/bye":
         if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
             confirm_template_message = TemplateSendMessage(
@@ -123,7 +123,7 @@ def handle_message(event):
             )
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
-            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
