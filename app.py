@@ -102,24 +102,17 @@ def handle_message(event):
             image_message
         )
     
+    elif "/idline " in event.message.text:
+        skss = event.message.text.replace('/idline ', '')
+        sasa = "http://line.me/R/ti/p/~" + skss
+        text_message = TextSendMessage(text=sasa)
+        line_bot_api.reply_message(event.reply_token, text_message)
+	
     elif '/shorturl' in text:
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
         result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL + "&type=api").text
-        imagemap_message = ImagemapSendMessage(
-            base_url=originURL,
-            alt_text='PASUNX send message',
-            base_size=BaseSize(height=1040, width=1040),
-            actions=[
-                MessageImagemapAction(
-                    text=result,
-                    area=ImagemapArea(
-                        x=520, y=0, width=520, height=1040
-                    )
-                )
-            ]
-        )
-        line_bot_api.reply_message(event.reply_token, image_message)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
 
 
 
