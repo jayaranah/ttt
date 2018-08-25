@@ -180,7 +180,7 @@ def handle_message(event):
                 text=result,
                 actions=[
                     PostbackAction(
-                        label='ข้อมูล',
+                        label='ข้อมูล URL',
                         text='/check ' + result,
                         data='action=buy&itemid=1'
                     ),
@@ -189,7 +189,7 @@ def handle_message(event):
                         text=result
                     ),
                     URIAction(
-                        label='เปิด',
+                        label='เปิด URL',
                         uri=result
                     )
                 ]
