@@ -142,7 +142,7 @@ def handle_message(event):
                     ),
                     MessageAction(
                         label="Get Url",
-                        text=request
+                        text=result
                     ),
                     URIAction(
                         label='uri',
