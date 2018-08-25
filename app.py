@@ -78,10 +78,8 @@ def handle_message(event):
     gid = event.source.sender_id #get group_id
 #=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
     if "/yt " in text:
-        sep = text.split(" ")
-        txt = event.message.text.replace(sep[0] + " ","")
-        cond = txt.split("|")
-        search = cond[0]
+        separate = text.split(" ")
+        search = text.replace(separate[0] + " ","")
         url = requests.get("http://api.w3hills.com/youtube/search?keyword={}&api_key=86A7FCF3-6CAF-DEB9-E214-B74BDB835B5B".format(search))
         data = url.json()
         if len(cond) == 1:
@@ -92,8 +90,10 @@ def handle_message(event):
                 result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
             result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
             line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text=result))
-    if text == "/news":
-        r = requests.get("http://www.google.co.th/search?q="+s+"&tbm=nws")
+    if "/news" in text:
+        separate = text.split(" ")
+        search = text.replace(separate[0] + " ","")
+        r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
         content = r.text
         news_summaries = []
         soup = BeautifulSoup(content, "html.parser")
