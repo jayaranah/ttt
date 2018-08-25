@@ -132,20 +132,20 @@ def handle_message(event):
             alt_text='Buttons template',
             template=ButtonsTemplate(
                 thumbnail_image_url='https://gamingroom.co/wp-content/uploads/2017/11/CyCYOArUoAA2T6d.jpg',
-                title='SHORTURL',
-                text='God message',
+                title='RESULT',
+                text=result,
                 actions=[
                     PostbackAction(
-                        label='check',
+                        label='CHECK',
                         text='/check ' + result,
                         data='action=buy&itemid=1'
                     ),
                     MessageAction(
-                        label="Get Url",
+                        label="URL",
                         text=result
                     ),
                     URIAction(
-                        label='uri',
+                        label='OPEN',
                         uri=result
                     )
                 ]
