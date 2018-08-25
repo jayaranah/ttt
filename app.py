@@ -180,7 +180,7 @@ def handle_message(event):
                         text=result
                     ),
                     URIAction(
-                        label='เปืด',
+                        label='เปิด',
                         uri=result
                     )
                 ]
