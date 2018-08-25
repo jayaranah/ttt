@@ -74,7 +74,7 @@ def handle_message(event):
     gid = event.source.sender_id #get group_id
 #=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
     if text == "/bye":
-		if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
+        if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
             confirm_template_message = TemplateSendMessage(
                 alt_text='God message',
 	    		template=ConfirmTemplate(
@@ -120,11 +120,11 @@ def handle_message(event):
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
     if text == 'goodbye':
-		if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
-        if isinstance(event.source, SourceGroup):
-                line_bot_api.reply_message(
-                    event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
-                line_bot_api.leave_group(event.source.group_id)
+        if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
+            if isinstance(event.source, SourceGroup):
+                    line_bot_api.reply_message(
+                        event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
+                    line_bot_api.leave_group(event.source.group_id)
             elif isinstance(event.source, SourceRoom):
                 line_bot_api.reply_message(
                     event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
