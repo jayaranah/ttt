@@ -128,31 +128,54 @@ def handle_message(event):
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
         result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL + "&type=api").text
+        buttons_template_message = TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                thumbnail_image_url='https://gamingroom.co/wp-content/uploads/2017/11/CyCYOArUoAA2T6d.jpg',
+                title='SHORTURL',
+                text='God message',
+                actions=[
+                    PostbackAction(
+                        label='check',
+                        text='/check ' + result,
+                        data='action=buy&itemid=1'
+                    ),
+                    MessageAction(
+                        label='',
+                        text='message text'
+                    ),
+                    URIAction(
+                        label='uri',
+                        uri=result
+                    )
+                ]
+            )
+        )
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
 		
     elif '/help' in text:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text="no help message!"))
 		
     elif '/test' in text:
-        image_carousel_template_message = TemplateSendMessage(
-            alt_text='God message',
-            template=ImageCarouselTemplate(
-                columns=[
-                        ImageCarouselColumn(
-                            image_url='https://example.com/item1.jpg',
-                        action=PostbackAction(
-                            label='postback1',
-                            text='postback text1',
-                            data='action=buy&itemid=1'
-                        )
+        buttons_template_message = TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+                thumbnail_image_url='https://example.com/image.jpg',
+                title='Menu',
+                text='God message',
+                actions=[
+                    PostbackAction(
+                        label='postback',
+                        text='postback text',
+                        data='action=buy&itemid=1'
                     ),
-                    ImageCarouselColumn(
-                        image_url='https://example.com/item2.jpg',
-                        action=PostbackAction(
-                            label='postback2',
-                            text='postback text2',
-                            data='action=buy&itemid=2'
-                        )
+                    MessageAction(
+                        label='message',
+                        text='message text'
+                    ),
+                    URIAction(
+                        label='uri',
+                        uri='http://example.com/'
                     )
                 ]
             )
