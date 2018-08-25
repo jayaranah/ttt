@@ -60,17 +60,17 @@ def handle_message(event):
     if text == 'bye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
-                event.reply_token, TextSendMessage(text='Leaving group'))
+                event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
             line_bot_api.leave_group(event.source.group_id)
         elif isinstance(event.source, SourceRoom):
             line_bot_api.reply_message(
-                event.reply_token, TextSendMessage(text='Leaving group'))
+                event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
             line_bot_api.leave_room(event.source.room_id)
         else:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="Bot can't leave from 1:1 chat"))
-#===================================================
+                TextSendMessage(text="บอทไม่สามารถออกแชท 1:1 ได้"))
+
     elif 'gambar' in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
@@ -94,7 +94,7 @@ def handle_message(event):
             image_message
         )
     
-    elif '/su' in text:
+    elif '/shorturl' in text:
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
         result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL + "&type=api").text
