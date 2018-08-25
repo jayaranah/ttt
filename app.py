@@ -39,17 +39,6 @@ handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
-rich_menu_to_create = RichMenu(
-    size=RichMenuSize(width=2500, height=843),
-    selected=False,
-    name="PASUNx [ GOD ]",
-    chat_bar_text="MENU",
-    areas=[RichMenuArea(
-        bounds=RichMenuBounds(x=0, y=0, width=2500, height=843),
-        action=URIAction(label='Contact', uri='https://line.me/ti/p/~esci_'))]
-)
-rich_menu_id = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
-
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -91,7 +80,29 @@ def handle_message(event):
             )
         )
         line_bot_api.reply_message(event.reply_token, confirm_template_message)
-	
+    if text == '/info':
+        if isinstance(event.source, SourceGroup):
+            profile = line_bot_api.get_room_member_profile(event.source.sender_id, event.source.user_id)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=profile.user_id))
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=profile.display_name))
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=profile.picture_url))
+        elif isinstance(event.source, SourceRoom):
+            profile = line_bot_api.get_room_member_profile(event.source.room_id, event.source.user_id)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=profile.user_id))
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=profile.display_name))
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=profile.picture_url))
     if text == '/goodbye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
