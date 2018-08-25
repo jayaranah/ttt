@@ -85,7 +85,7 @@ def handle_message(event):
                         data='action=buy&itemid=1'
                     ),
                     MessageAction(
-                        label='ไม่ลบ',
+                        label='ไม่',
                         text='...'
                     )
                 ]
