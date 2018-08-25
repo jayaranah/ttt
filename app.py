@@ -1,4 +1,5 @@
 from flask import Flask, request, abort
+from bs4 import BeautifulSoup
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -43,12 +44,14 @@ helpmessage = """╔〘 PASUNX 〙
 ║
 ╠═✪〘 ข้อความช่วยเหลือ  〙
 ╠✪〘 คำสั่งปกติ 〙
-╠➣/id
-╠➣/bio
+╠➣ /id
+╠➣ /bio
 ╠➣ /name
 ╠➣ /pic
+╠➣ /idline
 ╠✪〘 คำสั่งพิเศษ  〙
 ╠➣ /shorturl [URL]
+╠➣ /news [text]
 ║
 ╚〘 PASUNX 〙"""
 # Post Request
@@ -73,6 +76,31 @@ def handle_message(event):
     sender = event.source.user_id #get user_id
     gid = event.source.sender_id #get group_id
 #=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
+    if "/yt " in text:
+        sep = text.split(" ")
+        txt = event.message.text.replace(sep[0] + " ","")
+        cond = txt.split("|")
+        search = cond[0]
+        url = requests.get("http://api.w3hills.com/youtube/search?keyword={}&api_key=86A7FCF3-6CAF-DEB9-E214-B74BDB835B5B".format(search))
+        data = url.json()
+        if len(cond) == 1:
+            no = 0
+            result = "╔══〘 Youtube Search 〙"
+            for anu in data["videos"]:
+                no += 1
+                result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
+            result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
+            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text=result))
+    if text == "/news":
+        r = requests.get("http://www.google.co.th/search?q="+s+"&tbm=nws")
+        content = r.text
+        news_summaries = []
+        soup = BeautifulSoup(content, "html.parser")
+        st_divs = soup.findAll("div", {"class": "st"})
+        for st_div in st_divs:
+            news_summaries.append(st_div.text)
+        for i in news_summaries:
+            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text=i))
     if text == "/bye":
         if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
             confirm_template_message = TemplateSendMessage(
@@ -133,29 +161,6 @@ def handle_message(event):
                 line_bot_api.reply_message(
                     event.reply_token,
                     TextSendMessage(text="บอทไม่สามารถออกแชท 1:1 ได้"))
-
-    elif 'gambar' in text:
-        separate = text.split(" ")
-        search = text.replace(separate[0] + " ","")
-        r = requests.get("http://rahandiapi.herokuapp.com/imageapi?key=betakey&q={}".format(search))
-        data = r.text
-        data = json.loads(data)
-
-        if data["result"] != []:
-            items = data["result"]
-            path = random.choice(items)
-            a = items.index(path)
-            b = len(items)
-
-        image_message = ImageSendMessage(
-            original_content_url=path,
-            preview_image_url=path
-        )
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            image_message
-        )
     
     elif "/idline " in event.message.text:
         skss = event.message.text.replace('/idline ', '')
