@@ -43,7 +43,7 @@ helpmessage = """╔〘 PASUNX 〙
 ║
 ╠═✪〘 ข้อความช่วยเหลือ  〙
 ╠✪〘 คำสั่งปกติ 〙
-╠➣/mid
+╠➣/id
 ╠➣/bio
 ╠➣ /name
 ╠➣ /pic
@@ -82,7 +82,7 @@ def handle_message(event):
                     actions=[
                         PostbackAction(
                             label='แน่ใจ',
-                            text='/goodbye',
+                            text='goodbye',
                             data='action=buy&itemid=1'
                         ),
                         MessageAction(
@@ -94,8 +94,8 @@ def handle_message(event):
             )
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
-            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text="คใช้นี้ไม่ได้รับอนุญาตให้"))
-    if text == '/mid':
+            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
+    if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.user_id))
