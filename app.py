@@ -51,13 +51,17 @@ def callback():
         abort(400)
     return 'OK'
 
+@handler.add(JoinEvent)
+def handle_join(event):
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Welcome'))
+	
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     text = event.message.text #simplify for receove message
     sender = event.source.user_id #get user_id
     gid = event.source.sender_id #get group_id
 #=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
-    if text == 'bye':
+    if text == '/bye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
                 event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
