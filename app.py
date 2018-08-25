@@ -141,8 +141,8 @@ def handle_message(event):
                         data='action=buy&itemid=1'
                     ),
                     MessageAction(
-                        label='',
-                        text='message text'
+                        label="Get Url",
+                        text=request
                     ),
                     URIAction(
                         label='uri',
