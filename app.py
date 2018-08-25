@@ -65,7 +65,7 @@ def callback():
 
 @handler.add(JoinEvent)
 def handle_join(event):
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Hello man type /help to view help',quick_reply=QuickReply(items=[QuickReplyButton(action=MessageAction(label="view help", text="/help"))])))
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='สวัสดี พิพม์ /help เพิ้อดูคำสั่งทั้งหมด',quick_reply=QuickReply(items=[QuickReplyButton(action=MessageAction(label="ดูคำสั่ง", text="/help"))])))
 	
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
