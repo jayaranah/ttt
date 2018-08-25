@@ -63,7 +63,7 @@ def handle_message(event):
 #=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
     if text == "/bye":
         confirm_template_message = TemplateSendMessage(
-            alt_text='PASUN [ x ]',
+            alt_text='God message',
 			template=ConfirmTemplate(
                 text='Delete bot?',
                 actions=[
@@ -135,28 +135,30 @@ def handle_message(event):
 		
 	elif '/test' in text:
         image_carousel_template_message = TemplateSendMessage(
-        alt_text='ImageCarousel template',
-        template=ImageCarouselTemplate(
-            columns=[
-                ImageCarouselColumn(
-                    image_url='https://example.com/item1.jpg',
-                    action=PostbackAction(
-                        label='postback1',
-                        text='postback text1',
-                        data='action=buy&itemid=1'
+            alt_text='God message',
+            template=ImageCarouselTemplate(
+                columns=[
+                        ImageCarouselColumn(
+                            image_url='https://example.com/item1.jpg',
+                        action=PostbackAction(
+                            label='postback1',
+                            text='postback text1',
+                            data='action=buy&itemid=1'
+                        )
+                    ),
+                    ImageCarouselColumn(
+                        image_url='https://example.com/item2.jpg',
+                        action=PostbackAction(
+                            label='postback2',
+                            text='postback text2',
+                            data='action=buy&itemid=2'
+                        )
                     )
-                ),
-                ImageCarouselColumn(
-                    image_url='https://example.com/item2.jpg',
-                    action=PostbackAction(
-                        label='postback2',
-                        text='postback text2',
-                        data='action=buy&itemid=2'
-                    )
-                )
-            ]
+                ]
+            )
         )
-    )
+		line_bot_api.reply_message(event.reply_token, image_carousel_template_message)
+	
 
 
 
