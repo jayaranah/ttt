@@ -1,103 +1,118 @@
-# -*- coding: utf-8 -*-
+from flask import Flask, request, abort
 
-#  Licensed under the Apache License, Version 2.0 (the "License"); you may
-#  not use this file except in compliance with the License. You may obtain
-#  a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-#  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-#  License for the specific language governing permissions and limitations
-#  under the License.
-
-import os
-import sys
-import wsgiref.simple_server
-from argparse import ArgumentParser
-
-from builtins import bytes
 from linebot import (
-    LineBotApi, WebhookParser
+    LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
     InvalidSignatureError
 )
+from linebot.models import *
+import requests, json
+
+
+import errno
+import os
+import sys, random
+import tempfile
+
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage
+    MessageEvent, TextMessage, TextSendMessage,
+    SourceUser, SourceGroup, SourceRoom,
+    TemplateSendMessage, ConfirmTemplate, MessageAction,
+    ButtonsTemplate, ImageCarouselTemplate, ImageCarouselColumn, URIAction,
+    PostbackAction, DatetimePickerAction,
+    CarouselTemplate, CarouselColumn, PostbackEvent,
+    StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
+    ImageMessage, VideoMessage, AudioMessage, FileMessage,
+    UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent,
+    FlexSendMessage, BubbleContainer, ImageComponent, BoxComponent,
+    TextComponent, SpacerComponent, IconComponent, ButtonComponent,
+    SeparatorComponent,
 )
-from linebot.utils import PY3
 
-# get channel_secret and channel_access_token from your environment variable
-channel_secret = os.getenv('5e0bb8077fbec9c4a14217ebeb653371', None)
-channel_access_token = os.getenv('mIbLskZ5WICInTfM8omKsuBf0T9gPmd4CnExNyZYF9A3gRWHis83SiJeuJdP/ORXco3ECH13n4WqdPfWBuQXdfPBsqeNoFf0O8y6pvzq0orNgxBiBc38Apv7SQolAP5WQz0AsLJcEGoZC3YZQMTJPAdB04t89/1O/w1cDnyilFU=', None)
-if channel_secret is None:
-    print('Specify LINE_CHANNEL_SECRET as environment variable.')
-    sys.exit(1)
-if channel_access_token is None:
-    print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
-    sys.exit(1)
+app = Flask(__name__)
 
-line_bot_api = LineBotApi(channel_access_token)
-parser = WebhookParser(channel_secret)
+# Channel Access Token
+line_bot_api = LineBotApi('mIbLskZ5WICInTfM8omKsuBf0T9gPmd4CnExNyZYF9A3gRWHis83SiJeuJdP/ORXco3ECH13n4WqdPfWBuQXdfPBsqeNoFf0O8y6pvzq0orNgxBiBc38Apv7SQolAP5WQz0AsLJcEGoZC3YZQMTJPAdB04t89/1O/w1cDnyilFU=')
+# Channel Secret
+handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
+#===========[ NOTE SAVER ]=======================
+notes = {}
 
-
-def application(environ, start_response):
-    # check request path
-    if environ['PATH_INFO'] != '/callback':
-        start_response('404 Not Found', [])
-        return create_body('Not Found')
-
-    # check request method
-    if environ['REQUEST_METHOD'] != 'POST':
-        start_response('405 Method Not Allowed', [])
-        return create_body('Method Not Allowed')
-
-    # get X-Line-Signature header value
-    signature = environ['HTTP_X_LINE_SIGNATURE']
-
-    # get request body as text
-    wsgi_input = environ['wsgi.input']
-    content_length = int(environ['CONTENT_LENGTH'])
-    body = wsgi_input.read(content_length).decode('utf-8')
-
-    # parse webhook body
+# Post Request
+@app.route("/callback", methods=['POST'])
+def callback():
+    signature = request.headers['X-Line-Signature']
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
     try:
-        events = parser.parse(body, signature)
+        handler.handle(body, signature)
     except InvalidSignatureError:
-        start_response('400 Bad Request', [])
-        return create_body('Bad Request')
+        abort(400)
+    return 'OK'
 
-    # if event is MessageEvent and message is TextMessage, then echo text
-    for event in events:
-        if not isinstance(event, MessageEvent):
-            continue
-        if not isinstance(event.message, TextMessage):
-            continue
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    text = event.message.text #simplify for receove message
+    sender = event.source.user_id #get user_id
+    gid = event.source.sender_id #get group_id
+#=====[ LEAVE GROUP OR ROOM ]==========[ ARSYBAI ]======================
+    if text == 'bye':
+        if isinstance(event.source, SourceGroup):
+            line_bot_api.reply_message(
+                event.reply_token, TextSendMessage(text='Leaving group'))
+            line_bot_api.leave_group(event.source.group_id)
+        elif isinstance(event.source, SourceRoom):
+            line_bot_api.reply_message(
+                event.reply_token, TextSendMessage(text='Leaving group'))
+            line_bot_api.leave_room(event.source.room_id)
+        else:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text="Bot can't leave from 1:1 chat"))
+#===================================================
+    elif 'gambar' in text:
+        separate = text.split(" ")
+        search = text.replace(separate[0] + " ","")
+        r = requests.get("http://rahandiapi.herokuapp.com/imageapi?key=betakey&q={}".format(search))
+        data = r.text
+        data = json.loads(data)
+
+        if data["result"] != []:
+            items = data["result"]
+            path = random.choice(items)
+            a = items.index(path)
+            b = len(items)
+
+        image_message = ImageSendMessage(
+            original_content_url=path,
+            preview_image_url=path
+        )
 
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=event.message.text)
+            image_message
         )
-
-    start_response('200 OK', [])
-    return create_body('OK')
-
-
-def create_body(text):
-    if PY3:
-        return [bytes(text, 'utf-8')]
-    else:
-        return text
+    
+    elif '/su' in text:
+        originURLx = text.split(" ")
+        originURL = text.replace(originURLx[0] + " ","")
+        result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL + "&type=api").text
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
 
 
-if __name__ == '__main__':
-    arg_parser = ArgumentParser(
-        usage='Usage: python ' + __file__ + ' [--port <port>] [--help]'
-    )
-    arg_parser.add_argument('-p', '--port', type=int, default=8000, help='port')
-    options = arg_parser.parse_args()
 
-    httpd = wsgiref.simple_server.make_server('', options.port, application)
-    httpd.serve_forever()
+
+
+
+
+
+
+
+
+
+#=======================================================================================================================
+import os
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
