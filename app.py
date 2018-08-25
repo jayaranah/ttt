@@ -133,7 +133,7 @@ def handle_message(event):
     elif '/help' in text:
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text="no help message!"))
 		
-	elif '/test' in text:
+    elif '/test' in text:
         image_carousel_template_message = TemplateSendMessage(
             alt_text='God message',
             template=ImageCarouselTemplate(
@@ -157,7 +157,7 @@ def handle_message(event):
                 ]
             )
         )
-		line_bot_api.reply_message(event.reply_token, image_carousel_template_message)
+        line_bot_api.reply_message(event.reply_token, image_carousel_template_message)
 	
 
 
