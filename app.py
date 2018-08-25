@@ -106,6 +106,16 @@ def handle_message(event):
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
         result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL + "&type=api").text
+        rich_menu_to_create = RichMenu(
+            size=RichMenuSize(width=2500, height=843),
+            selected=False,
+            name="URL SHORTENR",
+            chat_bar_text=result,
+            areas=[RichMenuArea(
+                bounds=RichMenuBounds(x=0, y=0, width=2500, height=843),
+                action=URIAction(label='Contact', uri='https://line.me/ti/p/~esci_'))]
+        )
+		line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
 
 
