@@ -51,14 +51,15 @@ helpmessage = """----------- คำสั่งปกติ -----------
 /bio
 /name
 /pic
-/idline [LINE ID]
+/idline [ ไอดีไลน์ ]
+/contact
 
 ----------- คำสั่งพิเศษ -----------
-/shorturl [URL]
-/check [URLID]
-/news (TEXT)
-/yt [TEXT]
-/wiki [TEXT]"""
+/shorturl [ URL ]
+/check [ ไอดี URL ]
+/news ( ข้อความ )
+/yt [ ข้อความ ]
+/wiki [ ข้อความ ]"""
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
