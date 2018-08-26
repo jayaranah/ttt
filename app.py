@@ -95,11 +95,14 @@ def handle_message(event):
             no = 0
             result="ข่าวเกี่ยวกับ " + search
             for anu in data["articles"]:
-                if no > 3:
-                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-                else:
+                try:
                     no = no +1
-                    result+="\n\n" + anu["title"] + "\n"+anu["url"]
+                    if no > 3:
+                        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+                    else:
+                        result+="\n\n" + anu["title"] + "\n"+anu["url"]
+                except Exception as Error:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
         except Exception as Error:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))
