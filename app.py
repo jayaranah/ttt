@@ -111,21 +111,26 @@ def handle_message(event):
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
         content = r.text
         news_summaries = []
-        soup = BeautifulSoup(content.decode('utf-8'), "html.parser")
+        soup = BeautifulSoup(content, "html.parser")
         st_divs = soup.findAll("div", {"class": "st"})
+        g_divs = soup.findAll("div", {"class": "g"})
         trs="ข่าวเกี่ยวกับ " + search
+        news_d = []
+        for g_div in g_divs: 
+            news_d.append(g_div.text)
         for st_div in st_divs:
             news_summaries.append(st_div.text)
         for i in news_summaries:
-            try:
-                if len(trs) > 500:
-                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
-                else:
-                    gs = goslate.Goslate()
-                    x = gs.translate(i,'th')
-                    trs+="\n\n"+x+"\nอ่านเพิ่มเติมได้ที่"
-            except Exception as error:
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
+            for x in news_d:
+                try:
+                    if len(trs) > 600:
+                        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
+                    else:
+                        gs = goslate.Goslate()
+                        x = gs.translate(x,'th')
+                        trs+="\n\n"+x+"\nอ่านเพิ่มเติมได้ที่"
+                except Exception as error:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
     if text == "/bye":
         if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
