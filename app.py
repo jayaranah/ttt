@@ -87,7 +87,24 @@ def handle_message(event):
             result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
         result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-    if "/news" in text:
+    if "/news2" in text:
+        separate = text.split(" ")
+        search = text.replace(separate[0] + " ","")
+        user_agent = {'User-agent': 'Mozilla/5.0'}
+        url = requests.get("https://newsapi.org/v2/top-headlines?sources={}&apiKey=763b6fc67a594a4e9e0f9d29303f83dd".format(search), headers=user_agent)
+        data = url.json()
+        no = 0
+        result=""
+        for anu in data["articles"]:
+            if no > 6:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+            else:
+                no = no +1
+                gs = goslate.Goslate()
+                x = gs.translate(anu["description"],'th')
+                result+="\n\n"+x+"\nRead more\n"+anu["url"]
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+    elif "/news" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
@@ -109,23 +126,6 @@ def handle_message(event):
             except Exception as error:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
-    if "/news2" in text:
-        separate = text.split(" ")
-        search = text.replace(separate[0] + " ","")
-        user_agent = {'User-agent': 'Mozilla/5.0'}
-        url = requests.get("https://newsapi.org/v2/top-headlines?sources={}&apiKey=763b6fc67a594a4e9e0f9d29303f83dd".format(search), headers=user_agent)
-        data = url.json()
-        no = 0
-        result=""
-        for anu in data["articles"]:
-            if no > 6:
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-            else:
-                no = no +1
-                gs = goslate.Goslate()
-                x = gs.translate(anu["description"],'th')
-                result+="\n\n"+x+"\nRead more\n"+anu["url"]
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     if text == "/bye":
         if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
             confirm_template_message = TemplateSendMessage(
