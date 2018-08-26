@@ -133,10 +133,19 @@ def handle_message(event):
             buttons_template_message = TemplateSendMessage(
                 alt_text='God message',
                 template=ButtonsTemplate(
-                    thumbnail_image_url='https://gamingroom.co/wp-content/uploads/2017/11/CyCYOArUoAA2T6d.jpg',
+                    thumbnail_image_url='http://livedoor.blogimg.jp/jin115/imgs/8/5/85e4ac24.jpg',
                     title=wikipedia.page(wiki).title,
                     text=wikipedia.summary(wiki, sentences=1),
                     actions=[
+                        PostbackAction(
+                            label='ติดต่อผู้สร้าง',
+                            text='line.me/ti/p/~esci_',
+                            data='action=buy&itemid=1'
+                        ),
+                        MessageAction(
+                            label="ข้อมูล",
+                            text=wikipedia.summary(wiki, sentences=1)
+                        ),
                         URIAction(
                             label='อ่านเพิ่มเติม',
                             uri=wikipedia.page(wiki).url
