@@ -144,7 +144,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาต"))
-    elif text == '/contact':
+    if text == '/contact':
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
@@ -160,7 +160,19 @@ def handle_message(event):
                     # title
                     TextComponent(text='PASUNx', weight='bold', size='xl'),
                     # review
-
+                    BoxComponent(
+                        layout='baseline',
+                        margin='md',
+                        contents=[
+                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
+                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
+                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
+                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
+                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
+                            TextComponent(text='4.0', size='sm', color='#999999', margin='md',
+                                          flex=0)
+                        ]
+                    ),
                     # info
                     BoxComponent(
                         layout='vertical',
