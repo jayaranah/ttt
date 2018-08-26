@@ -40,13 +40,13 @@ handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
-helpmessage = """----- คำสั่งปกติ -----
+helpmessage = """----------- คำสั่งปกติ -----------
 /id
 /bio
 /name
 /pic
 /idline
------ คำสั่งพิเศษ -----
+----------- คำสั่งพิเศษ -----------
 /shorturl [URL]
 /news [text]
 /yt [text]
@@ -119,11 +119,6 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
-    if "/text " in text:
-        txt = text.replace("/text ","")
-        t1 = "\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xa0\x81\xf4\x80\xa0\x81\xf4\x80\xa0\x81"
-        t2 = "\xf4\x80\x82\xb3\xf4\x8f\xbf\xbf"
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=t1 + txt + t2))
     if '/wiki ' in text:
         try:
             wiki = text.replace("/wiki ","")
