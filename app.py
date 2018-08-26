@@ -156,23 +156,11 @@ def handle_message(event):
             ),
             body=BoxComponent(
                 layout='vertical',
-                """contents=[
+                contents=[
                     # title
-                    TextComponent(text='Aditmadzs', weight='bold', size='xl'),
+                    TextComponent(text='PASUNx', weight='bold', size='xl'),
                     # review
-                    BoxComponent(
-                        layout='baseline',
-                        margin='md',
-                        contents=[
-                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
-                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
-                            TextComponent(text='4.0', size='sm', color='#999999', margin='md',
-                                          flex=0)
-                        ]
-                    ),"""
+
                     # info
                     BoxComponent(
                         layout='vertical',
@@ -236,7 +224,7 @@ def handle_message(event):
                 ]
             ),
         )
-        message = FlexSendMessage(alt_text="hello", contents=bubble)
+        message = FlexSendMessage(alt_text="God message", contents=bubble)
         line_bot_api.reply_message(
             event.reply_token,
             message
