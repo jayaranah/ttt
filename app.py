@@ -51,15 +51,14 @@ helpmessage = """----------- คำสั่งปกติ -----------
 /bio
 /name
 /pic
-/contact
-/idline [id line]
+/idline [LINE ID]
 
 ----------- คำสั่งพิเศษ -----------
 /shorturl [URL]
-/check [URL]
-/news (text)
-/yt [text]
-/wiki [text]"""
+/check [URLID]
+/news (TEXT)
+/yt [TEXT]
+/wiki [TEXT]"""
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -173,7 +172,7 @@ def handle_message(event):
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
-                url='http://images4.fanpop.com/image/photos/15800000/Animes-anime-cuties-15887412-1024-768.jpg',
+                url='http://images4.fanpop.com/image/photos/15800000/Animes-anime-cuties-15887436-1400-875.jpg',
                 size='full',
                 aspect_ratio='20:13',
                 aspect_mode='cover',
@@ -185,16 +184,6 @@ def handle_message(event):
                     # title
                     TextComponent(text='PASUNx', weight='bold', size='xl'),
                     # review
-                    #BoxComponent(
-                    #    layout='baseline',
-                    #    margin='md',
-                    #    contents=[
-                    #       TextComponent(text='Official Account bot', size='sm', color='#333', margin='md',
-                    #                      flex=0),
-                    #        TextComponent(text='Official Account bot', size='sm', color='#ff0000', margin='md',
-                    #                      flex=0)
-                    #    ]
-                    #),
                     # info
                     BoxComponent(
                         layout='vertical',
