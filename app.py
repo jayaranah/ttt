@@ -49,8 +49,7 @@ helpmessage = """----------- คำสั่งปกติ -----------
 /idline [id line]
 ----------- คำสั่งพิเศษ -----------
 /shorturl [URL]
-/news
-/snews [text]
+/news (text)
 /yt [text]
 /wiki [text]"""
 # Post Request
@@ -87,7 +86,7 @@ def handle_message(event):
             result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
         result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-    if "/news" in text:
+    """if text == "/news":
         try:
             user_agent = {'User-agent': 'Mozilla/5.0'}
             url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
@@ -100,8 +99,8 @@ def handle_message(event):
                     result+="\n\n" + anu["title"] + "\n"+anu["url"]
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
         except Exception as Error:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))
-    elif "/snews" in text:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))"""
+    if "/news" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
