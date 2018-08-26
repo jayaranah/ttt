@@ -166,35 +166,10 @@ def handle_message(event):
             except Exception as e:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(e)))
     if "/kick" in text:
-        groupID = even.source.group_id
-        contactIds = event.source.user_id
-        line_bot_api.kickoutFromGroup(0, groupID, contactIds)
-""""if text == "/profile":
-        profile = line_bot_api.get_profile(event.source.user_id)
-        buttons_template_message = TemplateSendMessage(
-            alt_text='God message',
-            template=ButtonsTemplate(
-                thumbnail_image_url='http://livedoor.blogimg.jp/jin115/imgs/8/5/85e4ac24.jpg',
-                title='โปรไฟล์ของคุณ',
-                text=profile.display_name,
-                actions=[
-                    PostbackAction(
-                        label="ID",
-                        text=event.source.user_id,
-                        data='action=buy&itemid=1'
-                    ),
-                    MessageAction(
-                        label="ข้อความสถานะ",
-                        text=profile.status_message
-                    ),
-                    URIAction(
-                        label="รูปโปรไฟล์",
-                        text=profile.picture_url
-                    )
-                ]
-            )
-        )
-        line_bot_api.reply_message(event.reply_token, buttons_template_message)"""
+        line_bot_api.kickoutFromGroup(0, event.source.group_id, event.source.user_id)
+    if "/2kick" in text:
+        line_bot_api.kickoutFromGroup(event.source.group_id, event.source.user_id)
+		
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
