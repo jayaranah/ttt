@@ -53,6 +53,7 @@ helpmessage = """----------- คำสั่งปกติ -----------
 /pic
 /contact
 /idline [id line]
+
 ----------- คำสั่งพิเศษ -----------
 /shorturl [URL]
 /check [URL]
@@ -184,16 +185,16 @@ def handle_message(event):
                     # title
                     TextComponent(text='PASUNx', weight='bold', size='xl'),
                     # review
-                    BoxComponent(
-                        layout='baseline',
-                        margin='md',
-                        contents=[
-                            TextComponent(text='Official Account bot', size='sm', color='#333', margin='md',
-                                          flex=0),
-                            TextComponent(text='Official Account bot', size='sm', color='#ff0000', margin='md',
-                                          flex=0)
-                        ]
-                    ),
+                    #BoxComponent(
+                    #    layout='baseline',
+                    #    margin='md',
+                    #    contents=[
+                    #       TextComponent(text='Official Account bot', size='sm', color='#333', margin='md',
+                    #                      flex=0),
+                    #        TextComponent(text='Official Account bot', size='sm', color='#ff0000', margin='md',
+                    #                      flex=0)
+                    #    ]
+                    #),
                     # info
                     BoxComponent(
                         layout='vertical',
