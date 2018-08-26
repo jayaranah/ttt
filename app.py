@@ -123,37 +123,16 @@ def handle_message(event):
         try:
             wiki = text.replace("wiki ","")
             wikipedia.set_lang("th")
-            pesan="Title ("
+            pesan="หัวข้อ "
             pesan+=wikipedia.page(wiki).title
-            pesan+=")\n\n"
+            pesan+="\n\n"
             pesan+=wikipedia.summary(wiki, sentences=1)
-            pesan+="\n"
+            pesan+="\n\nอ่านเพิ่มเติม\n"
             pesan+=wikipedia.page(wiki).url
-            #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
-            buttons_template_message = TemplateSendMessage(
-                alt_text='God message',
-                template=ButtonsTemplate(
-                    thumbnail_image_url='http://livedoor.blogimg.jp/jin115/imgs/8/5/85e4ac24.jpg',
-                    title=wikipedia.page(wiki).title,
-                    text=wikipedia.summary(wiki, sentences=1),
-                    actions=[
-                        PostbackAction(
-                            label='ติดต่อผู้สร้าง',
-                            text='line.me/ti/p/~esci_',
-                            data='action=buy&itemid=1'
-                        ),
-                        MessageAction(
-                            label="ข้อมูล",
-                            text=wikipedia.summary(wiki, sentences=1)
-                        ),
-                        URIAction(
-                            label='อ่านเพิ่มเติม',
-                            uri=wikipedia.page(wiki).url
-                        )
-                    ]
-                )
-            )
-            line_bot_api.reply_message(event.reply_token, buttons_template_message)
+            titlex = wikipedia.page(wiki).title
+            textx = wikipedia.summary(wiki, sentences=1)
+            urlx = wikipedia.page(wiki).url
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
         except:
             try:
                 pesan="เกินขีด จำกัด ข้อความ! โปรดคลิกลิงก์เพื่ออ่านเพิ่มเติม\n"
