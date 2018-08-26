@@ -99,7 +99,7 @@ def handle_message(event):
             no = no +1
             gs = goslate.Goslate()
             textt = anu["description"]
-            x = gs.translate(,'th')
+            x = gs.translate(textt,'th')
             result+="\n\n"+x+"\nอ่านเพิ่มเติม\n"+anu["url"]
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     elif "/news" in text:
