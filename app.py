@@ -170,6 +170,25 @@ def handle_message(event):
             group = line_bot_api.findGroupByTicket(ticket_id)
             line_bot_api.acceptGroupInvitationByTicket(group.id,ticket_id)
     if text == '/contact':
+        buttons_template_message = TemplateSendMessage(
+            alt_text='God message',
+            template=ButtonsTemplate(
+                thumbnail_image_url='http://images4.fanpop.com/image/photos/15800000/Animes-anime-cuties-15887436-1400-875.jpg',
+                title='ติดต่อ',
+                text='ช่องทางการติดต่อ',
+                actions=[
+                    MessageAction(
+                        label="เฟซบุ๊ค",
+                        text='https://www.facebook.com/pasun.cf'
+                    ),
+                    URIAction(
+                        label='ไลน์',
+                        uri=http://line.me/ti/p/~esci_
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template_message)
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
@@ -248,10 +267,10 @@ def handle_message(event):
                 ]
             ),
         )
-        message = FlexSendMessage(alt_text="God message", contents=bubble)
+        #message = FlexSendMessage(alt_text="God message", contents=bubble)
         line_bot_api.reply_message(
             event.reply_token,
-            message
+            buttons_template_message
         )
     if '/wiki ' in text:
         try:
