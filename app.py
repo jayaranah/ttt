@@ -170,11 +170,11 @@ def handle_message(event):
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
-                url='http://livedoor.blogimg.jp/jin115/imgs/8/5/85e4ac24.jpg',
+                url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCWqUtr22Qte8XOPpDyZpzZqwiYRxel5Airr4dXro87VOBog0o',
                 size='full',
                 aspect_ratio='20:13',
                 aspect_mode='cover',
-                action=URIAction(uri='http://line.me/ti/p/~esci_', label='label')
+                action=URIAction(uri='http://line.me/ti/p/~esci_', label='@')
             ),
             body=BoxComponent(
                 layout='vertical',
