@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 from bs4 import BeautifulSoup
 import wikipedia
-import goslate
+import goslate, gTTS
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -40,6 +40,10 @@ line_bot_api = LineBotApi('mIbLskZ5WICInTfM8omKsuBf0T9gPmd4CnExNyZYF9A3gRWHis83S
 handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
 #===========[ NOTE SAVER ]=======================
 notes = {}
+
+mimic = {
+    "target":{}
+}
 
 helpmessage = """----------- คำสั่งปกติ -----------
 /id
@@ -100,6 +104,16 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
         except Exception as Error:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))"""
+    if "/say" in text:
+        separate = text.split(" ")
+        say = text.replace(separate[0] + " ","")
+        lang = 'en'
+        tts = gTTS(text=say, lang=lang)
+        tts.save("hasil.mp3")
+        audio_message = AudioSendMessage(
+            original_content_url='/hasil.mp3',
+            duration=240000
+        )
     if "/news" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
