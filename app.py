@@ -94,15 +94,13 @@ def handle_message(event):
         url = requests.get("https://newsapi.org/v2/top-headlines?sources={}&apiKey=763b6fc67a594a4e9e0f9d29303f83dd".format(search), headers=user_agent)
         data = url.json()
         no = 0
-        result=""
+        result="ข่าวเกี่ยวกับ " + search
         for anu in data["articles"]:
-            if no > 6:
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-            else:
-                no = no +1
-                gs = goslate.Goslate()
-                x = gs.translate(anu["description"],'th')
-                result+="\n\n"+x+"\nRead more\n"+anu["url"]
+            no = no +1
+            gs = goslate.Goslate()
+            textt = anu["description"]
+            x = gs.translate(,'th')
+            result+="\n\n"+x+"\nอ่านเพิ่มเติม\n"+anu["url"]
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     elif "/news" in text:
         separate = text.split(" ")
