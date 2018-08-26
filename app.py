@@ -144,6 +144,103 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาต"))
+    elif text == '/flex':
+        bubble = BubbleContainer(
+            direction='ltr',
+            hero=ImageComponent(
+                url='https://lh5.googleusercontent.com/VoOmR6tVRwKEow0HySsJ_UdrQrqrpwUwSzQnGa0yBeqSex-4Osar2w-JohT6yPu4Vl4qchND78aU2c5a5Bhl=w1366-h641-rw',
+                size='full',
+                aspect_ratio='20:13',
+                aspect_mode='cover',
+                action=URIAction(uri='http://line.me/ti/p/~adit_cmct', label='label')
+            ),
+            body=BoxComponent(
+                layout='vertical',
+                contents=[
+                    # title
+                    TextComponent(text='Aditmadzs', weight='bold', size='xl'),
+                    # review
+                    BoxComponent(
+                        layout='baseline',
+                        margin='md',
+                        contents=[
+                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
+                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
+                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
+                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
+                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
+                            TextComponent(text='4.0', size='sm', color='#999999', margin='md',
+                                          flex=0)
+                        ]
+                    ),
+                    # info
+                    BoxComponent(
+                        layout='vertical',
+                        margin='lg',
+                        spacing='sm',
+                        contents=[
+                            BoxComponent(
+                                layout='baseline',
+                                spacing='sm',
+                                contents=[
+                                    TextComponent(
+                                        text='Place',
+                                        color='#aaaaaa',
+                                        size='sm',
+                                        flex=1
+                                    ),
+                                    TextComponent(
+                                        text='Tangerang, Indonesia',
+                                        wrap=True,
+                                        color='#666666',
+                                        size='sm',
+                                        flex=5
+                                    )
+                                ],
+                            ),
+                            BoxComponent(
+                                layout='baseline',
+                                spacing='sm',
+                                contents=[
+                                    TextComponent(
+                                        text='Time',
+                                        color='#aaaaaa',
+                                        size='sm',
+                                        flex=1
+                                    ),
+                                    TextComponent(
+                                        text="10:00 - 23:00",
+                                        wrap=True,
+                                        color='#666666',
+                                        size='sm',
+                                        flex=5,
+                                    ),
+                                ],
+                            ),
+                        ],
+                    )
+                ],
+            ),
+            footer=BoxComponent(
+                layout='vertical',
+                spacing='sm',
+                contents=[
+                    # separator
+                    SeparatorComponent(),
+                    # websiteAction
+                    ButtonComponent(
+                        style='link',
+                        height='sm',
+                        action=URIAction(label='Aditmadzs', uri="https://line.me/ti/p/~adit_cmct")
+                    )
+                ]
+            ),
+        )
+        message = FlexSendMessage(alt_text="hello", contents=bubble)
+        line_bot_api.reply_message(
+            event.reply_token,
+            message
+        )
     if '/wiki ' in text:
         try:
             wiki = text.replace("/wiki ","")
