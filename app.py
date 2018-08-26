@@ -99,7 +99,7 @@ def handle_message(event):
         for i in news_summaries:
             try:
                 gs = goslate.Goslate()
-                trs = gs.translate(i,'en')
+                trs = gs.translate(i,'th')
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
             except Exception as error:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
