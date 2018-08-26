@@ -94,15 +94,17 @@ def handle_message(event):
         news_summaries = []
         soup = BeautifulSoup(content, "html.parser")
         st_divs = soup.findAll("div", {"class": "st"})
+        trs="ข่าวเกี่ยวกับ " + search
         for st_div in st_divs:
             news_summaries.append(st_div.text)
         for i in news_summaries:
             try:
                 gs = goslate.Goslate()
                 trs = gs.translate(i,'th')
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
+                trs+="\n\n"+trs
             except Exception as error:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
     if text == "/bye":
         if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
             confirm_template_message = TemplateSendMessage(
