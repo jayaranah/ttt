@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 from bs4 import BeautifulSoup
 import wikipedia
+from googletrans import Translator
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -45,7 +46,7 @@ helpmessage = """----------- คำสั่งปกติ -----------
 /bio
 /name
 /pic
-/idline
+/idline [id line]
 ----------- คำสั่งพิเศษ -----------
 /shorturl [URL]
 /news [text]
@@ -96,7 +97,11 @@ def handle_message(event):
         for st_div in st_divs:
             news_summaries.append(st_div.text)
         for i in news_summaries:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=i))
+            translator = Translator()
+            hasil = translator.translate(i, dest='th')
+            A = hasil.text
+            A = A.encode('utf-8')
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=A))
     if text == "/bye":
         if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
             confirm_template_message = TemplateSendMessage(
