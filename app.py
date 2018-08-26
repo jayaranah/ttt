@@ -94,7 +94,7 @@ def handle_message(event):
         no = 0
         result="ข่าวเกี่ยวกับ " + search
         for anu in data["articles"]:
-            if no > 5:
+            if no > 3:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
             else:
                 no = no +1
