@@ -99,9 +99,12 @@ def handle_message(event):
             news_summaries.append(st_div.text)
         for i in news_summaries:
             try:
-                gs = goslate.Goslate()
-                x = gs.translate(i,'th')
-                trs+="\n\n"+x
+                if len(trs) > 500:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
+                else:
+                    gs = goslate.Goslate()
+                    x = gs.translate(i,'th')
+                    trs+="\n\n"+x
             except Exception as error:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
