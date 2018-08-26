@@ -87,20 +87,21 @@ def handle_message(event):
             result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
         result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-    if "/news2" in text:
-        separate = text.split(" ")
-        search = text.replace(separate[0] + " ","")
+    if "/news" == text:
         user_agent = {'User-agent': 'Mozilla/5.0'}
-        url = requests.get("https://newsapi.org/v2/top-headlines?sources={}&apiKey=763b6fc67a594a4e9e0f9d29303f83dd".format(search), headers=user_agent)
+        url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd".format(search), headers=user_agent)
         data = url.json()
         no = 0
         result="ข่าวเกี่ยวกับ " + search
         for anu in data["articles"]:
-            no = no +1
-            gs = goslate.Goslate()
-            textt = anu["description"]
-            x = gs.translate(textt,'th')
-            result+="\n\n"+x+"\nอ่านเพิ่มเติม\n"+anu["url"]
+            if no > 5:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+            else:
+                no = no +1
+                gs = goslate.Goslate()
+                textt = anu["description"]
+                tiitle = anu["title"]
+                result+="\n\n" + tiitle + "\n"+textt+"\nอ่านเพิ่มเติม\n"+anu["url"]
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     elif "/news" in text:
         separate = text.split(" ")
