@@ -230,6 +230,10 @@ def handle_message(event):
                         label="URL",
                         text=result
                     ),
+                    MessageAction(
+                        label="URL",
+                        text=result
+                    ),
                     URIAction(
                         label='เปิด URL',
                         uri=result
