@@ -115,6 +115,7 @@ def handle_message(event):
             original_content_url='/hasil.mp3',
             duration=240000
         )
+        line_bot_api.reply_message(event.reply_token,audio_message)
     if "/news" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
