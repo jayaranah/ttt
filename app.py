@@ -1,7 +1,8 @@
 from flask import Flask, request, abort
 from bs4 import BeautifulSoup
 import wikipedia
-import goslate, gTTS
+import goslate
+from gtts import gTTS
 from linebot import (
     LineBotApi, WebhookHandler
 )
