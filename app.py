@@ -49,7 +49,8 @@ helpmessage = """----------- คำสั่งปกติ -----------
 /idline [id line]
 ----------- คำสั่งพิเศษ -----------
 /shorturl [URL]
-/news (text)
+/news
+/snews [text]
 /yt [text]
 /wiki [text]"""
 # Post Request
@@ -99,7 +100,7 @@ def handle_message(event):
                 no = no +1
                 result+="\n\n" + anu["title"] + "\n"+anu["url"]
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-    elif "/news" in text:
+    elif "/snews" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
