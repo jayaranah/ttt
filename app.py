@@ -189,7 +189,7 @@ def handle_message(event):
                         margin='md',
                         contents=[
                             TextComponent(text='Official Account bot', size='sm', color='#333', margin='md',
-                                          flex=0)
+                                          flex=0),
                             TextComponent(text='Official Account bot', size='sm', color='#ff0000', margin='md',
                                           flex=0)
                         ]
