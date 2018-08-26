@@ -51,9 +51,11 @@ helpmessage = """----------- คำสั่งปกติ -----------
 /bio
 /name
 /pic
+/contact
 /idline [id line]
 ----------- คำสั่งพิเศษ -----------
 /shorturl [URL]
+/check [URL]
 /news (text)
 /yt [text]
 /wiki [text]"""
@@ -170,7 +172,7 @@ def handle_message(event):
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
-                url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCWqUtr22Qte8XOPpDyZpzZqwiYRxel5Airr4dXro87VOBog0o',
+                url='http://images4.fanpop.com/image/photos/15800000/Animes-anime-cuties-15887412-1024-768.jpg',
                 size='full',
                 aspect_ratio='20:13',
                 aspect_mode='cover',
@@ -186,12 +188,9 @@ def handle_message(event):
                         layout='baseline',
                         margin='md',
                         contents=[
-                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
-                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(size='sm', url='https://example.com/grey_star.png'),
-                            TextComponent(text='4.0', size='sm', color='#999999', margin='md',
+                            TextComponent(text='Official Account bot', size='sm', color='#333', margin='md',
+                                          flex=0)
+                            TextComponent(text='Official Account bot', size='sm', color='#ff0000', margin='md',
                                           flex=0)
                         ]
                     ),
@@ -225,7 +224,7 @@ def handle_message(event):
                                 spacing='sm',
                                 contents=[
                                     TextComponent(
-                                        text='Time',
+                                        text='เวลา',
                                         color='#aaaaaa',
                                         size='sm',
                                         flex=1
