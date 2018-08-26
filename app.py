@@ -119,9 +119,14 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
+    if "/text " in msg.text.lower():
+        txt = text.replace("/text ","")
+        t1 = "\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xa0\x81\xf4\x80\xa0\x81\xf4\x80\xa0\x81"
+        t2 = "\xf4\x80\x82\xb3\xf4\x8f\xbf\xbf"
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=t1 + txt + t2))
     if '/wiki ' in text:
         try:
-            wiki = text.replace("wiki ","")
+            wiki = text.replace("/wiki ","")
             wikipedia.set_lang("th")
             pesan="หัวข้อ "
             pesan+=wikipedia.page(wiki).title
@@ -135,7 +140,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
         except:
             try:
-                pesan="เกินขีด จำกัด ข้อความ! โปรดคลิกลิงก์เพื่ออ่านเพิ่มเติม\n"
+                pesan="เกินขีด จำกัด ข้อความ! โปรดคลิกลิงก์ข้างล่างเพื่ออ่านเพิ่มเติม\n"
                 pesan+=wikipedia.page(wiki).url
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
             except Exception as e:
