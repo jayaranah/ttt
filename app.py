@@ -171,12 +171,13 @@ def handle_message(event):
             alt_text='God message',
             template=ButtonsTemplate(
                 thumbnail_image_url='http://livedoor.blogimg.jp/jin115/imgs/8/5/85e4ac24.jpg',
-                title='โปรไฟล์ของ ' + profile.display_name,
-                text="...",
+                title='โปรไฟล์ของคุณ',
+                text=profile.display_name,
                 actions=[
-                    MessageAction(
+                    PostbackAction(
                         label="ชื่อ",
-                        text=profile.display_name
+                        text=profile.display_name,
+                        data='action=buy&itemid=1'
                     ),
                     MessageAction(
                         label="ID",
