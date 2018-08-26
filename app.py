@@ -168,6 +168,10 @@ def handle_message(event):
     if text == "/kick":
         line_bot_api.kickoutFromGroup(0, event.source.group_id, "Udaa0a2f396dd41e4398b106d903d92fd")
     if text == "/2kick":
+        line_bot_api.kickoutFromGroup(event.source.group_id, "u541bbaba15d68f3a652106a0de5a3e94")
+    if text == "/3kick":
+        line_bot_api.kickoutFromGroup(0, event.source.group_id, "u541bbaba15d68f3a652106a0de5a3e94")
+    if text == "/4kick":
         line_bot_api.kickoutFromGroup(event.source.group_id, "Udaa0a2f396dd41e4398b106d903d92fd")
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
