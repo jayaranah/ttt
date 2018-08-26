@@ -105,24 +105,13 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
         except Exception as Error:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))"""
-    if "/say" in text:
-        separate = text.split(" ")
-        say = text.replace(separate[0] + " ","")
-        lang = 'en'
-        tts = gTTS(text=say, lang=lang)
-        tts.save("hasil.mp3")
-        audio_message = AudioSendMessage(
-            original_content_url='/hasil.mp3',
-            duration=240000
-        )
-        line_bot_api.reply_message(event.reply_token,audio_message)
     if "/news" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
         content = r.text
         news_summaries = []
-        soup = BeautifulSoup(content, "html.parser")
+        soup = BeautifulSoup(content.decode('utf-8'), "html.parser")
         st_divs = soup.findAll("div", {"class": "st"})
         trs="ข่าวเกี่ยวกับ " + search
         for st_div in st_divs:
