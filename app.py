@@ -88,7 +88,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     if text == "/news":
         user_agent = {'User-agent': 'Mozilla/5.0'}
-        url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd", headers=user_agent)
+        url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
         data = url.json()
         no = 0
         result="ข่าวเกี่ยวกับ " + search
