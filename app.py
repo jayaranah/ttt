@@ -1,7 +1,7 @@
 from flask import Flask, request, abort
 from bs4 import BeautifulSoup
 import wikipedia
-from googletrans import Translator
+import goslate
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -97,11 +97,12 @@ def handle_message(event):
         for st_div in st_divs:
             news_summaries.append(st_div.text)
         for i in news_summaries:
-            translator = Translator()
-            hasil = translator.translate(i, dest='th')
-            A = hasil.text
-            A = A.encode('utf-8')
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=A))
+            try:
+                gs = goslate.Goslate()
+                trs = gs.translate(i,'en')
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
+            except Exception as error:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
     if text == "/bye":
         if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
             confirm_template_message = TemplateSendMessage(
