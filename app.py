@@ -165,7 +165,11 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
             except Exception as e:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(e)))
-    if text == "/profile":
+    if "/kick" in text:
+        groupID = even.source.group_id
+        contactIds = event.source.user_id
+        line_bot_api.kickoutFromGroup(0, groupID, contactIds)
+""""if text == "/profile":
         profile = line_bot_api.get_profile(event.source.user_id)
         buttons_template_message = TemplateSendMessage(
             alt_text='God message',
@@ -190,7 +194,7 @@ def handle_message(event):
                 ]
             )
         )
-        line_bot_api.reply_message(event.reply_token, buttons_template_message)
+        line_bot_api.reply_message(event.reply_token, buttons_template_message)"""
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
