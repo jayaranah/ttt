@@ -173,16 +173,21 @@ def handle_message(event):
         buttons_template_message = TemplateSendMessage(
             alt_text='God message',
             template=ButtonsTemplate(
-                thumbnail_image_url='http://images4.fanpop.com/image/photos/15800000/Animes-anime-cuties-15887436-1400-875.jpg',
+                thumbnail_image_url='https://gamingroom.co/wp-content/uploads/2017/11/CyCYOArUoAA2T6d.jpg',
                 title='ติดต่อ',
                 text='ช่องทางการติดต่อ',
                 actions=[
+                    PostbackAction(
+                        label='ไลน์',
+                        text='http://line.me/ti/p/~esci_',
+                        data='action=buy&itemid=1'
+                    ),
                     MessageAction(
                         label="เฟซบุ๊ค",
                         text='https://www.facebook.com/pasun.cf'
                     ),
                     URIAction(
-                        label='ไลน์',
+                        label='ติดต่อ',
                         uri='http://line.me/ti/p/~esci_'
                     )
                 ]
