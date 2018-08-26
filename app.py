@@ -144,19 +144,19 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาต"))
-    elif text == '/flex':
+    elif text == '/contact':
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
-                url='https://lh5.googleusercontent.com/VoOmR6tVRwKEow0HySsJ_UdrQrqrpwUwSzQnGa0yBeqSex-4Osar2w-JohT6yPu4Vl4qchND78aU2c5a5Bhl=w1366-h641-rw',
+                url='http://livedoor.blogimg.jp/jin115/imgs/8/5/85e4ac24.jpg',
                 size='full',
                 aspect_ratio='20:13',
                 aspect_mode='cover',
-                action=URIAction(uri='http://line.me/ti/p/~adit_cmct', label='label')
+                action=URIAction(uri='http://line.me/ti/p/~esci_', label='label')
             ),
             body=BoxComponent(
                 layout='vertical',
-                contents=[
+                """contents=[
                     # title
                     TextComponent(text='Aditmadzs', weight='bold', size='xl'),
                     # review
@@ -172,7 +172,7 @@ def handle_message(event):
                             TextComponent(text='4.0', size='sm', color='#999999', margin='md',
                                           flex=0)
                         ]
-                    ),
+                    ),"""
                     # info
                     BoxComponent(
                         layout='vertical',
@@ -184,13 +184,13 @@ def handle_message(event):
                                 spacing='sm',
                                 contents=[
                                     TextComponent(
-                                        text='Place',
+                                        text='สถานที่',
                                         color='#aaaaaa',
                                         size='sm',
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text='Tangerang, Indonesia',
+                                        text='Bangkok, Thailand',
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
@@ -209,7 +209,7 @@ def handle_message(event):
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text="10:00 - 23:00",
+                                        text="00:00 - 23:59",
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
@@ -231,7 +231,7 @@ def handle_message(event):
                     ButtonComponent(
                         style='link',
                         height='sm',
-                        action=URIAction(label='Aditmadzs', uri="https://line.me/ti/p/~adit_cmct")
+                        action=URIAction(label='contact', uri="https://line.me/ti/p/~esci_")
                     )
                 ]
             ),
