@@ -88,18 +88,21 @@ def handle_message(event):
         result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     if text == "/news":
-        user_agent = {'User-agent': 'Mozilla/5.0'}
-        url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
-        data = url.json()
-        no = 0
-        result="ข่าวเกี่ยวกับ " + search
-        for anu in data["articles"]:
-            if no > 3:
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-            else:
-                no = no +1
-                result+="\n\n" + anu["title"] + "\n"+anu["url"]
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+        try:
+            user_agent = {'User-agent': 'Mozilla/5.0'}
+            url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
+            data = url.json()
+            no = 0
+            result="ข่าวเกี่ยวกับ " + search
+            for anu in data["articles"]:
+                if no > 3:
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+                else:
+                    no = no +1
+                    result+="\n\n" + anu["title"] + "\n"+anu["url"]
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+        except Exception as Error:
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))
     elif "/snews" in text:
         separate = text.split(" ")
         search = text.replace(separate[0] + " ","")
