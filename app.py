@@ -116,7 +116,7 @@ def handle_message(event):
         soup = BeautifulSoup(content, "html.parser")
         st_divs = soup.findAll("div", {"class": "st"})
         g_divs = soup.findAll("div", {"class": "g"})
-        trs="ข่าวเกี่ยวกับ " + search
+        trs="ข่าวเกี่ยวกับ " + searchx
         news_d = []
         for g_div in g_divs: 
             news_d.append(g_div.text)
