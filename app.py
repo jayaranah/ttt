@@ -129,10 +129,25 @@ def handle_message(event):
             pesan+=wikipedia.summary(wiki, sentences=1)
             pesan+="\n"
             pesan+=wikipedia.page(wiki).url
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
+            #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
+            buttons_template_message = TemplateSendMessage(
+                alt_text='God message',
+                template=ButtonsTemplate(
+                    thumbnail_image_url='https://gamingroom.co/wp-content/uploads/2017/11/CyCYOArUoAA2T6d.jpg',
+                    title=wikipedia.page(wiki).title,
+                    text=wikipedia.summary(wiki, sentences=1),
+                    actions=[
+                        URIAction(
+                            label='อ่านเพิ่มเติม',
+                            uri=wikipedia.page(wiki).url
+                        )
+                    ]
+                )
+            )
+            line_bot_api.reply_message(event.reply_token, buttons_template_message)
         except:
             try:
-                pesan="Over Text Limit! Please Click link\n"
+                pesan="เกินขีด จำกัด ข้อความ! โปรดคลิกลิงก์เพื่ออ่านเพิ่มเติม\n"
                 pesan+=wikipedia.page(wiki).url
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
             except Exception as e:
