@@ -87,7 +87,7 @@ def handle_message(event):
             result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
         result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-    if text == "/news":
+    if "/news" in text:
         try:
             user_agent = {'User-agent': 'Mozilla/5.0'}
             url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
