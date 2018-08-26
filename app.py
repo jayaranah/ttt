@@ -104,7 +104,7 @@ def handle_message(event):
                 else:
                     gs = goslate.Goslate()
                     x = gs.translate(i,'th')
-                    trs+="\n\n"+x
+                    trs+="\n\n"+x+"\nอ่านเพิ่มเติมได้ที่"
             except Exception as error:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
