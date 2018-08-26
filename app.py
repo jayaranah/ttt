@@ -174,19 +174,16 @@ def handle_message(event):
                 title='โปรไฟล์ของคุณ',
                 text=profile.display_name,
                 actions=[
-                    MessageAction(
-                        label="ชื่อ",
-                        text=profile.display_name
-                    ),
-                    MessageAction(
+                    PostbackAction(
                         label="ID",
-                        text=event.source.user_id
+                        text=event.source.user_id,
+                        data='action=buy&itemid=1'
                     ),
                     MessageAction(
                         label="ข้อความสถานะ",
                         text=profile.status_message
                     ),
-                    MessageAction(
+                    URIAction(
                         label="รูปโปรไฟล์",
                         text=profile.picture_url
                     )
