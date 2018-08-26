@@ -107,7 +107,9 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))"""
     if "/news" in text:
         separate = text.split(" ")
-        search = text.replace(separate[0] + " ","")
+        searchx = text.replace(separate[0] + " ","")
+        gs = goslate.Goslate()
+        search = gs.translate(searchx,'en')
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
         content = r.text
         news_summaries = []
