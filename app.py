@@ -174,10 +174,9 @@ def handle_message(event):
                 title='โปรไฟล์ของคุณ',
                 text=profile.display_name,
                 actions=[
-                    PostbackAction(
+                    MessageAction(
                         label="ชื่อ",
-                        text=profile.display_name,
-                        data='action=buy&itemid=1'
+                        text=profile.display_name
                     ),
                     MessageAction(
                         label="ID",
