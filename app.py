@@ -40,21 +40,17 @@ handler = WebhookHandler('5e0bb8077fbec9c4a14217ebeb653371')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 
-helpmessage = """╔〘 PASUNX 〙
-║
-╠═✪〘 ข้อความช่วยเหลือ  〙
-╠✪〘 คำสั่งปกติ 〙
-╠➣ /id
-╠➣ /bio
-╠➣ /name
-╠➣ /pic
-╠➣ /idline
-╠✪〘 คำสั่งพิเศษ  〙
-╠➣ /shorturl [URL]
-╠➣ /news [text]
-╠➣ /yt [text]
-║
-╚〘 PASUNX 〙"""
+helpmessage = """----- คำสั่งปกติ -----
+/id
+/bio
+/name
+/pic
+/idline
+----- คำสั่งพิเศษ -----
+/shorturl [URL]
+/news [text]
+/yt [text]
+/wiki [text]"""
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
