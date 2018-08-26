@@ -165,11 +165,10 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
             except Exception as e:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(e)))
-    if "/kick" in text:
-        line_bot_api.kickoutFromGroup(0, event.source.group_id, event.source.user_id)
-    if "/2kick" in text:
-        line_bot_api.kickoutFromGroup(event.source.group_id, event.source.user_id)
-		
+    if text == "/kick":
+        line_bot_api.kickoutFromGroup(0, event.source.group_id, "Udaa0a2f396dd41e4398b106d903d92fd")
+    if text == "/2kick":
+        line_bot_api.kickoutFromGroup(event.source.group_id, "Udaa0a2f396dd41e4398b106d903d92fd")
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
