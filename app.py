@@ -327,12 +327,12 @@ def handle_message(event):
     elif '/check' in text:
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
-        result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL + "&type=api").text
+        result = requests.get("http://pasun.cf/api/check.php?url=" + originURL + "&type=api").text
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     elif '/shorturl' in text:
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
-        result = requests.get("http://pasun.cf/api/check.php?id=" + originURL).text
+        result = requests.get("http://pasun.cf/api/urlshorten.php?id=" + originURL).text
         buttons_template_message = TemplateSendMessage(
             alt_text='God message',
             template=ButtonsTemplate(
