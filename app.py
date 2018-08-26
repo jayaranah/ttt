@@ -123,6 +123,24 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
+    elif '/wiki ' in msg.text.lower():
+        try:
+            wiki = msg.text.lower().replace("wiki ","")
+            wikipedia.set_lang("th")
+            pesan="Title ("
+            pesan+=wikipedia.page(wiki).title
+            pesan+=")\n\n"
+            pesan+=wikipedia.summary(wiki, sentences=1)
+            pesan+="\n"
+            pesan+=wikipedia.page(wiki).url
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
+        except:
+            try:
+                pesan="Over Text Limit! Please Click link\n"
+                pesan+=wikipedia.page(wiki).url
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
+            except Exception as e:
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(e)))
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
