@@ -119,7 +119,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
-    if "/text " in msg.text.lower():
+    if "/text " in text:
         txt = text.replace("/text ","")
         t1 = "\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xb0\x82\xf4\x80\xa0\x81\xf4\x80\xa0\x81\xf4\x80\xa0\x81"
         t2 = "\xf4\x80\x82\xb3\xf4\x8f\xbf\xbf"
