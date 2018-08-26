@@ -143,7 +143,7 @@ def handle_message(event):
             )
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาต"))
     if '/wiki ' in text:
         try:
             wiki = text.replace("/wiki ","")
@@ -165,6 +165,35 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
             except Exception as e:
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(e)))
+    if text == "/profile":
+        profile = line_bot_api.get_profile(event.source.user_id)
+        buttons_template_message = TemplateSendMessage(
+            alt_text='God message',
+            template=ButtonsTemplate(
+                thumbnail_image_url='http://livedoor.blogimg.jp/jin115/imgs/8/5/85e4ac24.jpg',
+                title='โปรไฟล์ของ ' + profile.display_name,
+                text="...",
+                actions=[
+                    MessageAction(
+                        label="ชื่อ",
+                        text=profile.display_name
+                    ),
+                    MessageAction(
+                        label="ID",
+                        text=event.source.user_id
+                    ),
+                    MessageAction(
+                        label="ข้อความสถานะ",
+                        text=profile.status_message
+                    ),
+                    MessageAction(
+                        label="รูปโปรไฟล์",
+                        text=profile.picture_url
+                    )
+                ]
+            )
+        )
+        line_bot_api.reply_message(event.reply_token, buttons_template_message)
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
@@ -225,10 +254,6 @@ def handle_message(event):
                         label='ข้อมูล URL',
                         text='/check ' + result,
                         data='action=buy&itemid=1'
-                    ),
-                    MessageAction(
-                        label="URL",
-                        text=result
                     ),
                     MessageAction(
                         label="URL",
