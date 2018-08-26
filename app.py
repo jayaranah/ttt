@@ -144,6 +144,16 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาต"))
+    if "/ti/g/" in text:
+        link_re = re.compile('(?:line\:\/|line\.me\/R)\/ti\/g\/([a-zA-Z0-9_-]+)?')
+        links = link_re.findall(text)
+        n_links = []
+        for l in links:
+            if l not in n_links:
+                n_links.append(l)
+        for ticket_id in n_links:
+            group = line_bot_api.findGroupByTicket(ticket_id)
+            line_bot_api.acceptGroupInvitationByTicket(group.id,ticket_id)
     if text == '/contact':
         bubble = BubbleContainer(
             direction='ltr',
