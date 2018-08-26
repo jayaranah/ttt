@@ -123,9 +123,9 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาตให้"))
-    if '/wiki ' in msg.text.lower():
+    if '/wiki ' in text:
         try:
-            wiki = msg.text.lower().replace("wiki ","")
+            wiki = text.replace("wiki ","")
             wikipedia.set_lang("th")
             pesan="Title ("
             pesan+=wikipedia.page(wiki).title
