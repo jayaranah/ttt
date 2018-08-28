@@ -88,31 +88,31 @@ def handle_message(event):
         url = requests.get("http://api.w3hills.com/youtube/search?keyword={}&api_key=86A7FCF3-6CAF-DEB9-E214-B74BDB835B5B".format(search))
         data = url.json()
         no = 0
-        result = "╔══〘 Youtube Search 〙"
+        result = "ค้นหา ยูทูป"
         for anu in data["videos"]:
             no += 1
-            result += "\n╠ {}. {}\n║Link: {}".format(str(no),str(anu["title"]),str(anu["webpage"]))
-        result += "\n╚══〘 Total {} Result 〙".format(str(len(data["videos"])))
+            result += "\n{}. {}\n{}\n".format(str(no),str(anu["title"]),str(anu["webpage"]))
+        result += "\nทั้งหมด {}".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-    """if text == "/news":
+    if text == "/news":
         try:
             user_agent = {'User-agent': 'Mozilla/5.0'}
             url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
             data = url.json()
-            result="ข่าวเกี่ยวกับ " + search
+            result="ข่าว"
             for anu in data["articles"]:
                 if len(result) > 500:
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
                 else:
-                    result+="\n\n" + anu["title"] + "\n"+anu["url"]
+                    result+="\n" + anu["title"] + "\n"+anu["url"]+"\n"
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
         except Exception as Error:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))"""
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))
     if "/news" in text:
         separate = text.split(" ")
-        searchx = text.replace(separate[0] + " ","")
-        gs = goslate.Goslate()
-        search = gs.translate(searchx,'en')
+        search = text.replace(separate[0] + " ","")
+        #gs = goslate.Goslate()
+        #search = gs.translate(searchx,'en')
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
         content = r.text
         news_summaries = []
@@ -353,12 +353,12 @@ def handle_message(event):
     elif '/check' in text:
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
-        result = requests.get("http://pasun.cf/api/check.php?id=" + originURL + "&type=api").text
+        result = requests.get("http://shorturlbyzefyrinusx.000webhostapp.com/api/check.php?id=" + originURL + "&type=api").text
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     elif '/shorturl' in text:
         originURLx = text.split(" ")
         originURL = text.replace(originURLx[0] + " ","")
-        result = requests.get("http://pasun.cf/api/urlshorten.php?url=" + originURL).text
+        result = requests.get("http://shorturlbyzefyrinusx.000webhostapp.com/api/urlshorten.php?url=" + originURL).text
         buttons_template_message = TemplateSendMessage(
             alt_text='God message',
             template=ButtonsTemplate(
