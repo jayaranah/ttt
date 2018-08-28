@@ -46,7 +46,10 @@ mimic = {
     "target":{}
 }
 
-helpmessage = """----------- คำสั่งปกติ -----------
+helpmessage = """[(NOTIFY){
+* pasun.cf is fixing now
+}]
+----------- คำสั่งปกติ -----------
 /id
 /bio
 /name
