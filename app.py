@@ -99,7 +99,7 @@ def handle_message(event):
             user_agent = {'User-agent': 'Mozilla/5.0'}
             url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
             data = url.json()
-            result="ข่าว"
+            result="ข่าวใหม่"
             for anu in data["articles"]:
                 if len(result) > 500:
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
