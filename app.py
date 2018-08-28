@@ -57,7 +57,8 @@ helpmessage = """----------- คำสั่งปกติ -----------
 ----------- คำสั่งพิเศษ -----------
 /shorturl [ URL ]
 /check [ ไอดี URL ]
-/news ( ข้อความ )
+/news ( ประเทศ )
+/snews [ ข้อความ ]
 /yt [ ข้อความ ]
 /wiki [ ข้อความ ]"""
 # Post Request
@@ -94,7 +95,7 @@ def handle_message(event):
             result += "\n{}. {}\n{}".format(str(no),str(anu["title"]),str(anu["webpage"]))
         result += "\nทั้งหมด {}".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-    if text == "/news":
+    if "/news" in text:
         try:
             separate = text.split(" ")
             country = text.replace(separate[0] + " ","")
@@ -111,7 +112,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
         except Exception as Error:
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))
-    if "/news" in text:
+    if "/snews" in text:
         separate = text.split(" ")
         searchx = text.replace(separate[0] + " ","")
         gs = goslate.Goslate()
