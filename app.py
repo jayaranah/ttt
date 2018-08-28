@@ -91,13 +91,16 @@ def handle_message(event):
         result = "ค้นหา ยูทูป"
         for anu in data["videos"]:
             no += 1
-            result += "\n{}. {}\n{}\n".format(str(no),str(anu["title"]),str(anu["webpage"]))
+            result += "\n{}. {}\n{}".format(str(no),str(anu["title"]),str(anu["webpage"]))
         result += "\nทั้งหมด {}".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     if text == "/news":
         try:
+            separate = text.split(" ")
+            country = text.replace(separate[0] + " ","")
+            if(separate == None):country == "th"
             user_agent = {'User-agent': 'Mozilla/5.0'}
-            url = requests.get("https://newsapi.org/v2/top-headlines?country=th&apiKey=763b6fc67a594a4e9e0f9d29303f83dd")
+            url = requests.get("https://newsapi.org/v2/top-headlines?country={}&apiKey=763b6fc67a594a4e9e0f9d29303f83dd".format(country))
             data = url.json()
             result="ข่าวใหม่"
             for anu in data["articles"]:
@@ -110,9 +113,9 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token, TextSendMessage(text=Error))
     if "/news" in text:
         separate = text.split(" ")
-        search = text.replace(separate[0] + " ","")
-        #gs = goslate.Goslate()
-        #search = gs.translate(searchx,'en')
+        searchx = text.replace(separate[0] + " ","")
+        gs = goslate.Goslate()
+        search = gs.translate(searchx,'en')
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
         content = r.text
         news_summaries = []
@@ -281,7 +284,7 @@ def handle_message(event):
         try:
             wiki = text.replace("/wiki ","")
             wikipedia.set_lang("th")
-            pesan="หัวข้อ "
+            pesan="วิกิพีเดียเกี่ยวกับ "
             pesan+=wikipedia.page(wiki).title
             pesan+="\n\n"
             pesan+=wikipedia.summary(wiki, sentences=1)
