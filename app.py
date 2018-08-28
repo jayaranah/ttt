@@ -115,8 +115,9 @@ def handle_message(event):
     if "/snews" in text:
         separate = text.split(" ")
         searchx = text.replace(separate[0] + " ","")
-        gs = goslate.Goslate()
-        search = gs.translate(searchx,'en')
+        search = searchx
+        #gs = goslate.Goslate()
+        #search = gs.translate(searchx,'en')
         r = requests.get("http://www.google.co.th/search?q="+search+"&tbm=nws")
         content = r.text
         news_summaries = []
