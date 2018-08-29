@@ -56,11 +56,11 @@ helpmessage = """----------- Normal order -----------
 
 ----------- Special Order -----------
 /shorturl [ URL ]
-/check [ ไอดี URL ]
-/news ( ประเทศ )
-/snews [ ข้อความ ]
-/yt [ ข้อความ ]
-/wiki [ ข้อความ ]"""
+/check [ ID URL ]
+/news ( Country )
+/snews [ message ]
+/yt [ message ]
+/wiki [ message ]"""
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -137,7 +137,7 @@ def handle_message(event):
                         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
                     else:
                         gs = goslate.Goslate()
-                        x = gs.translate(x,'th')
+                        x = gs.translate(x,'en')
                         trs+="\n\n"+x+"\nRead more at"
                 except Exception as error:
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
@@ -311,6 +311,13 @@ def handle_message(event):
         line_bot_api.kickoutFromGroup(0, event.source.group_id, "u541bbaba15d68f3a652106a0de5a3e94")
     if text == "/4kick":
         line_bot_api.kickoutFromGroup(event.source.group_id, "Udaa0a2f396dd41e4398b106d903d92fd")
+		
+    if text == '/gid':
+        profile = line_bot_api.get_profile(event.source.user_id)
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.source.group_id))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
     if text == '/id':
         profile = line_bot_api.get_profile(event.source.user_id)
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name))
