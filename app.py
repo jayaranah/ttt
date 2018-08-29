@@ -143,7 +143,7 @@ def handle_message(event):
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
     if text == "/bye":
-        if(event.source.user_id == "u8c0882ad80b5e12971ce2e438e79451f"):
+        if(event.source.user_id == "U2c7d1341178eed8c93c23e914cbcb6a0"):
             confirm_template_message = TemplateSendMessage(
                 alt_text='God message',
 	    		template=ConfirmTemplate(
@@ -285,7 +285,7 @@ def handle_message(event):
     if '/wiki ' in text:
         try:
             wiki = text.replace("/wiki ","")
-            wikipedia.set_lang("th")
+            wikipedia.set_lang("en")
             pesan="Wikipedia About"
             pesan+=wikipedia.page(wiki).title
             pesan+="\n\n"
@@ -336,19 +336,19 @@ def handle_message(event):
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
     if text == 'goodbye':
-        if(event.source.user_id == "u8c0882ad80b5e12971ce2e438e79451f"):
+        if(event.source.user_id == "U2c7d1341178eed8c93c23e914cbcb6a0"):
             if isinstance(event.source, SourceGroup):
                     line_bot_api.reply_message(
-                        event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
+                        event.reply_token, TextSendMessage(text='Outgoing...'))
                     line_bot_api.leave_group(event.source.group_id)
             elif isinstance(event.source, SourceRoom):
                 line_bot_api.reply_message(
-                    event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
+                    event.reply_token, TextSendMessage(text='Outgoing...'))
                 line_bot_api.leave_room(event.source.room_id)
             else:
                 line_bot_api.reply_message(
                     event.reply_token,
-                    TextSendMessage(text="บอทไม่สามารถออกแชท 1:1 ได้"))
+                    TextSendMessage(text="The bot can not leave chat. 1:1 have"))
     
     elif "/idline " in event.message.text:
         skss = event.message.text.replace('/idline ', '')
@@ -372,7 +372,7 @@ def handle_message(event):
                 text=result,
                 actions=[
                     PostbackAction(
-                        label='ข้อมูล URL',
+                        label='information URL',
                         text='/check ' + result,
                         data='action=buy&itemid=1'
                     ),
@@ -381,7 +381,7 @@ def handle_message(event):
                         text=result
                     ),
                     URIAction(
-                        label='เปิด URL',
+                        label='turns on URL',
                         uri=result
                     )
                 ]
