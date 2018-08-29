@@ -46,15 +46,15 @@ mimic = {
     "target":{}
 }
 
-helpmessage = """----------- คำสั่งปกติ -----------
+helpmessage = """----------- Normal order -----------
 /id
 /bio
 /name
 /pic
-/idline [ ไอดีไลน์ ]
+/idline [ Offline ]
 /contact
 
------------ คำสั่งพิเศษ -----------
+----------- Special Order -----------
 /shorturl [ URL ]
 /check [ ไอดี URL ]
 /news ( ประเทศ )
@@ -75,7 +75,7 @@ def callback():
 
 @handler.add(JoinEvent)
 def handle_join(event):
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='สวัสดี พิพม์ /help เพื่อดูคำสั่งทั้งหมด',quick_reply=QuickReply(items=[QuickReplyButton(action=MessageAction(label="กดที่นี่เพื่อดูคำสั่งทั้งหมด", text="/help"))])))
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='Hello /help To see all orders',quick_reply=QuickReply(items=[QuickReplyButton(action=MessageAction(label="Click here to view all orders.", text="/help"))])))
 	
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -89,11 +89,11 @@ def handle_message(event):
         url = requests.get("http://api.w3hills.com/youtube/search?keyword={}&api_key=86A7FCF3-6CAF-DEB9-E214-B74BDB835B5B".format(search))
         data = url.json()
         no = 0
-        result = "ค้นหา ยูทูป"
+        result = "Search"
         for anu in data["videos"]:
             no += 1
             result += "\n{}. {}\n{}".format(str(no),str(anu["title"]),str(anu["webpage"]))
-        result += "\nทั้งหมด {}".format(str(len(data["videos"])))
+        result += "\nall{}".format(str(len(data["videos"])))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
     if "/news" in text:
         try:
@@ -103,7 +103,7 @@ def handle_message(event):
             user_agent = {'User-agent': 'Mozilla/5.0'}
             url = requests.get("https://newsapi.org/v2/top-headlines?country={}&apiKey=763b6fc67a594a4e9e0f9d29303f83dd".format(country))
             data = url.json()
-            result="ข่าวใหม่"
+            result="New Releases"
             for anu in data["articles"]:
                 if len(result) > 500:
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
@@ -124,7 +124,7 @@ def handle_message(event):
         soup = BeautifulSoup(content, "html.parser")
         st_divs = soup.findAll("div", {"class": "st"})
         g_divs = soup.findAll("div", {"class": "g"})
-        trs="ข่าวเกี่ยวกับ " + searchx
+        trs="News about " + searchx
         news_d = []
         for g_div in g_divs: 
             news_d.append(g_div.text)
@@ -138,24 +138,24 @@ def handle_message(event):
                     else:
                         gs = goslate.Goslate()
                         x = gs.translate(x,'th')
-                        trs+="\n\n"+x+"\nอ่านเพิ่มเติมได้ที่"
+                        trs+="\n\n"+x+"\nRead more at"
                 except Exception as error:
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=error))
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=trs))
     if text == "/bye":
-        if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
+        if(event.source.user_id == "u8c0882ad80b5e12971ce2e438e79451f"):
             confirm_template_message = TemplateSendMessage(
                 alt_text='God message',
 	    		template=ConfirmTemplate(
-                    text='จะลบบอทออก? คุณแน่ใจหรือ?',
+                    text='Will remove the bot? Are you sure?',
                     actions=[
                         PostbackAction(
-                            label='แน่ใจ',
+                            label='sure',
                             text='goodbye',
                             data='action=buy&itemid=1'
                         ),
                         MessageAction(
-                            label='ไม่',
+                            label='Not',
                             text='...'
                         )
                     ]
@@ -163,7 +163,7 @@ def handle_message(event):
             )
             line_bot_api.reply_message(event.reply_token, confirm_template_message)
         else:
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="ผู้ใช้นี้ไม่ได้รับอนุญาต"))
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(text="This user is not allowed."))
     if "/ti/g/" in text:
         link_re = re.compile('(?:line\:\/|line\.me\/R)\/ti\/g\/([a-zA-Z0-9_-]+)?')
         links = link_re.findall(text)
@@ -179,21 +179,21 @@ def handle_message(event):
             alt_text='God message',
             template=ButtonsTemplate(
                 thumbnail_image_url='https://gamingroom.co/wp-content/uploads/2017/11/CyCYOArUoAA2T6d.jpg',
-                title='ติดต่อ',
-                text='ช่องทางการติดต่อ',
+                title='Contact',
+                text='contact',
                 actions=[
                     PostbackAction(
-                        label='ไลน์',
-                        text='http://line.me/ti/p/~esci_',
+                        label='Line',
+                        text='http://line.me/ti/p/~1535915621_',
                         data='action=buy&itemid=1'
                     ),
                     MessageAction(
                         label="เฟซบุ๊ค",
-                        text='https://www.facebook.com/pasun.cf'
+                        text='https://www.facebook.com/axel'
                     ),
                     URIAction(
-                        label='ติดต่อ',
-                        uri='http://line.me/ti/p/~esci_'
+                        label='Contact',
+                        uri='http://line.me/ti/p/~1535915621_'
                     )
                 ]
             )
@@ -225,7 +225,7 @@ def handle_message(event):
                                 spacing='sm',
                                 contents=[
                                     TextComponent(
-                                        text='สถานที่',
+                                        text='place',
                                         color='#aaaaaa',
                                         size='sm',
                                         flex=1
@@ -244,7 +244,7 @@ def handle_message(event):
                                 spacing='sm',
                                 contents=[
                                     TextComponent(
-                                        text='เวลา',
+                                        text='Time',
                                         color='#aaaaaa',
                                         size='sm',
                                         flex=1
@@ -286,11 +286,11 @@ def handle_message(event):
         try:
             wiki = text.replace("/wiki ","")
             wikipedia.set_lang("th")
-            pesan="วิกิพีเดียเกี่ยวกับ "
+            pesan="Wikipedia About"
             pesan+=wikipedia.page(wiki).title
             pesan+="\n\n"
             pesan+=wikipedia.summary(wiki, sentences=1)
-            pesan+="\n\nอ่านเพิ่มเติม\n"
+            pesan+="\n\nRead more\n"
             pesan+=wikipedia.page(wiki).url
             titlex = wikipedia.page(wiki).title
             textx = wikipedia.summary(wiki, sentences=1)
@@ -298,7 +298,7 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
         except:
             try:
-                pesan="เกินขีด จำกัด ข้อความ! โปรดคลิกลิงก์ข้างล่างเพื่ออ่านเพิ่มเติม\n"
+                pesan="Over limit message! Please click the link below to read more.\n"
                 pesan+=wikipedia.page(wiki).url
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text=pesan))
             except Exception as e:
@@ -336,7 +336,7 @@ def handle_message(event):
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.picture_url))
         #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.status_message))
     if text == 'goodbye':
-        if(event.source.user_id == "Udaa0a2f396dd41e4398b106d903d92fd"):
+        if(event.source.user_id == "u8c0882ad80b5e12971ce2e438e79451f"):
             if isinstance(event.source, SourceGroup):
                     line_bot_api.reply_message(
                         event.reply_token, TextSendMessage(text='กำลังออกกลุ่ม...'))
