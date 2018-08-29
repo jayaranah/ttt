@@ -188,8 +188,8 @@ def handle_message(event):
                         data='action=buy&itemid=1'
                     ),
                     MessageAction(
-                        label="เฟซบุ๊ค",
-                        text='https://www.facebook.com/axel'
+                        label="Facebook",
+                        text='https://www.facebook.com/DPunisher'
                     ),
                     URIAction(
                         label='Contact',
